@@ -5,6 +5,7 @@ import "github.com/spf13/viper"
 type Config struct {
 	CDNCepPath string `mapstructure:"CDN_CEP_PATH"`
 	VIACepPath string `mapstructure:"VIA_CEP_PATH"`
+	APIPort    string `mapstructure:"API_PORT"`
 }
 
 func LoadConfig(path string) (*Config, error) {

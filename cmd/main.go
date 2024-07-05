@@ -24,14 +24,15 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/{cep}", func(w http.ResponseWriter, r *http.Request) {
+		cep := r.URL.Path[1:]
 		ctx := context.Background()
 		w.Header().Set("Content-Type", "application/json")
 		cdnService := di.NewCDNCep(ctx, config.CDNCepPath)
 		viaService := di.NewVIACep(ctx, config.VIACepPath)
 
-		go cdnService.Get(cdnChannel, "18050-605")
-		go viaService.Get(viaChannel, "18050-605")
+		go cdnService.Get(cdnChannel, cep)
+		go viaService.Get(viaChannel, cep)
 
 		select {
 		case msg := <-cdnChannel:
